@@ -36,12 +36,14 @@ await jobs.release()
 ```
 
 ```js
-// DeleteFlaggedUsers.job.js|ts
-import { BaseJob } from '@universal-packages/background-jobs-mailing'
+// WelcomeEmail.job.js|ts
+import { BaseEmail } from '@universal-packages/background-jobs-mailing'
 
-export default class DeleteFlaggedUsersJob extends BaseJob {
-  async perform(params) {
-    deleteFlaggedUsers(params.count)
+export default class WelcomeEmail extends BaseEmail {
+  async build(params) {
+    const user = await User.find(params.userId)
+
+    return { subject: `Welcome ${user.name}`, to: user.email, from: 'support@company.com' }
   }
 }
 ```
@@ -64,18 +66,6 @@ Loads all emails so they can be enabled to send emails.
 ## BaseEmail
 
 Base interface to enable a JS class to be used as a mailer class, it will need a `build` method that return the send options.
-
-```js
-import { BaseEmail } from '@universal-packages/background-jobs-mailing'
-
-export default class WelcomeEmail extends BaseEmail {
-  async build(params) {
-    const user = await User.find(params.userId)
-
-    return { subject: `Welcome ${user.name}`, to: user.email, from: 'support@company.com' }
-  }
-}
-```
 
 ### Static properties
 
