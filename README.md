@@ -24,7 +24,7 @@ import { Jobs } from '@universal-packages/background-jobs-mailing'
 import { Mailing } from '@universal-packages/background-jobs-mailing'
 import WelcomeEmail from './src/emails/Welcome.email'
 
-const jobs = new Jobs({ jobsDirectory: './src/jobs', additional: [{ conventionPrefix: 'email', location: './src/emails' }] })
+const jobs = new Jobs({ jobsLocation: './src/jobs', additional: [{ conventionPrefix: 'email', location: './src/emails' }] })
 await jobs.prepare()
 
 const mailing = new Mailing( emailsLocation: './src/emails', engine: 'nodemailer', engineOptions: { transport: 'smtp', options: { host: 'smtp.com'} })
