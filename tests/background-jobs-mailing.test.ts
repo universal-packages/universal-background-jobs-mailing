@@ -86,7 +86,7 @@ describe('background-jobs-mailing', (): void => {
 
     expect(TestEngine.mock).toHaveBeenCalledWith({
       subject: 'excellent',
-      locals: { local: 'for sure'},
+      locals: { local: 'for sure' },
       template: expect.stringMatching(/.*emails\/excellent-email/),
       html: '<html>\n' + '  <body>\n' + '    <p>\n' + '  This is an excellent email for sure\n' + '</p>\n' + '\n' + '  </body>\n' + '</html>\n',
       text: 'This is an excellent email for sure\n'
