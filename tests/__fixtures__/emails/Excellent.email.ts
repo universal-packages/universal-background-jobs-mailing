@@ -1,4 +1,5 @@
 import { SendOptions } from '@universal-packages/mailing'
+
 import BaseEmail from '../../../src/BaseEmail'
 
 export default class ExcellentEmail extends BaseEmail {

@@ -1,5 +1,6 @@
 import { Mailing as ML } from '@universal-packages/mailing'
 import { loadModules } from '@universal-packages/module-loader'
+
 import BaseEmail from './BaseEmail'
 import { MailingOptions } from './Mailing.types'
 

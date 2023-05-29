@@ -1,9 +1,10 @@
-import FailingEmail from './__fixtures__/failing/Failing.email'
+import { Jobs } from '@universal-packages/background-jobs'
+import { TestEngine } from '@universal-packages/mailing'
+
+import { Mailing } from '../src'
 import ExcellentEmail from './__fixtures__/emails/Excellent.email'
 import GoodEmail from './__fixtures__/emails/Good.email'
-import { Jobs } from '@universal-packages/background-jobs'
-import { Mailing } from '../src'
-import { TestEngine } from '@universal-packages/mailing'
+import FailingEmail from './__fixtures__/failing/Failing.email'
 
 describe('background-jobs-mailing', (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
