@@ -12,7 +12,7 @@ describe('background-jobs-mailing', (): void => {
     const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', additional: [{ conventionPrefix: 'email' }] })
 
     await jobs.prepare()
-    await jobs.redisQueue.clear()
+    await jobs.queue.clear()
 
     jobs.on('enqueued', enqueuedMock)
 
