@@ -15,7 +15,7 @@
     "format": "prettier --write \"./{src,tests}/**/*.{ts,tsx,js,jsx,json}\""
   },
   "dependencies": {
-    "@universal-packages/mailing": "^1.0.0",
+    "@universal-packages/mailing": "^1.1.0",
     "change-case": "^4.1.2"
   },
   "peerDependencies": {
