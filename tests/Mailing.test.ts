@@ -6,7 +6,7 @@ import ExcellentEmail from './__fixtures__/emails/Excellent.email'
 import GoodEmail from './__fixtures__/emails/Good.email'
 import FailingEmail from './__fixtures__/failing/Failing.email'
 
-describe('background-jobs-mailing', (): void => {
+describe(Mailing, (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
     const enqueuedMock = jest.fn()
     const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', additional: [{ conventionPrefix: 'email' }] })
