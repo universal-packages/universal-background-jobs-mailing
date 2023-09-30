@@ -28,25 +28,31 @@ describe(Mailing, (): void => {
     expect(enqueuedMock.mock.calls).toEqual([
       [
         {
-          jobItem: {
-            payload: { good: true },
-            srcFile: expect.stringMatching(/__fixtures__\/emails\/Good.email.ts/),
-            name: 'GoodEmail',
-            maxRetries: 5,
-            queue: 'emails',
-            retryAfter: '1 minute'
+          event: 'enqueued',
+          payload: {
+            jobItem: {
+              payload: { good: true },
+              srcFile: expect.stringMatching(/__fixtures__\/emails\/Good.email.ts/),
+              name: 'GoodEmail',
+              maxRetries: 5,
+              queue: 'emails',
+              retryAfter: '1 minute'
+            }
           }
         }
       ],
       [
         {
-          jobItem: {
-            payload: { excellent: true },
-            srcFile: expect.stringMatching(/__fixtures__\/emails\/Excellent.email.ts/),
-            name: 'ExcellentEmail',
-            maxRetries: 5,
-            queue: 'emails',
-            retryAfter: '1 minute'
+          event: 'enqueued',
+          payload: {
+            jobItem: {
+              payload: { excellent: true },
+              srcFile: expect.stringMatching(/__fixtures__\/emails\/Excellent.email.ts/),
+              name: 'ExcellentEmail',
+              maxRetries: 5,
+              queue: 'emails',
+              retryAfter: '1 minute'
+            }
           }
         }
       ]
