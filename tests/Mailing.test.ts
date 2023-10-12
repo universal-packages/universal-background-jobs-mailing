@@ -6,6 +6,12 @@ import ExcellentEmail from './__fixtures__/emails/Excellent.email'
 import GoodEmail from './__fixtures__/emails/Good.email'
 import FailingEmail from './__fixtures__/failing/Failing.email'
 
+TestEngine.mock = jest.fn()
+
+beforeEach((): void => {
+  TestEngine.mock.mockClear()
+})
+
 describe(Mailing, (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
     const enqueuedMock = jest.fn()
