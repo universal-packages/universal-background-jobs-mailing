@@ -6,12 +6,6 @@ import ExcellentEmail from './__fixtures__/emails/Excellent.email'
 import GoodEmail from './__fixtures__/emails/Good.email'
 import FailingEmail from './__fixtures__/failing/Failing.email'
 
-TestEngine.mock = jest.fn()
-
-beforeEach((): void => {
-  TestEngine.mock.mockClear()
-})
-
 describe(Mailing, (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
     const enqueuedMock = jest.fn()
@@ -31,6 +25,8 @@ describe(Mailing, (): void => {
 
     await jobs.release()
 
+    expect(GoodEmail).toHaveBeenEnqueuedWith({ good: true })
+    expect(ExcellentEmail).toHaveBeenEnqueuedWith({ excellent: true })
     expect(enqueuedMock.mock.calls).toEqual([
       [
         {
@@ -77,6 +73,7 @@ describe(Mailing, (): void => {
       error = err
     }
 
+    expect(FailingEmail).not.toHaveBeenEnqueuedWith({ good: true })
     expect(error.message).toEqual('Email "build" method not implemented')
   })
 
