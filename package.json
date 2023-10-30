@@ -1,6 +1,6 @@
 {
   "name": "@universal-packages/background-jobs-mailing",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Mailing on top of Background Jobs",
   "author": "David De Anda <david@universal-packages.com> (https://github.com/universal-packages)",
   "license": "MIT",
