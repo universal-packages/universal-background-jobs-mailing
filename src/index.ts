@@ -1,3 +1,2 @@
-export { default as Mailing } from './Mailing'
-export * from './Mailing.types'
 export { default as BaseEmail } from './BaseEmail'
+export { default as MailingLoader } from './MailingLoader'

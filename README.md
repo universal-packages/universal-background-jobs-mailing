@@ -15,20 +15,17 @@ npm install @universal-packages/background-jobs
 npm install redis
 ```
 
-## Mailing
+## Jobs
 
-Mailing is still the main interface for email sending, but depends on Jobs to load the email classes to be able to be send later.
+After installation jobs will automatically load email job classes, pass all the mailing options through the jobs option `loaderOptions`.
 
 ```js
 import { Jobs } from '@universal-packages/background-jobs-mailing'
-import { Mailing } from '@universal-packages/background-jobs-mailing'
+
 import WelcomeEmail from './src/emails/Welcome.email'
 
-const jobs = new Jobs({ jobsLocation: './src/jobs', additional: [{ conventionPrefix: 'email', location: './src/emails' }] })
+const jobs = new Jobs({ jobsLocation: './src/jobs', loaderOptions: { mailing: { engine: 'local' } } })
 await jobs.prepare()
-
-const mailing = new Mailing( emailsLocation: './src/emails', engine: 'nodemailer', engineOptions: { transport: 'smtp', options: { host: 'smtp.com'} })
-await mailing.prepare()
 
 await WelcomeEmail.sendLater({ userId: 123 })
 
@@ -48,20 +45,10 @@ export default class WelcomeEmail extends BaseEmail {
 }
 ```
 
-### Options
+### LoaderOptions
 
 `Mailing` takes the same [options](https://github.com/universal-packages/universal-mailing#options) as the original Mailing.
 
-Additionally takes the following ones:
-
-- `emailsLocation` `String` `default: ./src`
-  Where all email files are, all files should add a `.email` prefix, ex: `Welcome.email.js`.
-
-### Instance methods
-
-#### **`prepare`**
-
-Loads all emails so they can be enabled to send emails.
 
 ## BaseEmail
 
