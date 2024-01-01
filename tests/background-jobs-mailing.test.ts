@@ -9,7 +9,7 @@ import FailingEmail from './__fixtures__/failing/Failing.email'
 describe('background-jobs-mailing', (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
     const enqueuedMock = jest.fn()
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: [MailingLoader] })
+    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
     await jobs.prepare()
     await jobs.queue.clear()
@@ -59,7 +59,7 @@ describe('background-jobs-mailing', (): void => {
 
   it('throws when the build method is not implemented', async (): Promise<void> => {
     let error: Error
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/failing', loaders: [MailingLoader] })
+    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/failing', loaders: { mailing: MailingLoader } })
 
     await jobs.prepare()
 
@@ -74,7 +74,7 @@ describe('background-jobs-mailing', (): void => {
   })
 
   it('perform behaves as if using send', async (): Promise<void> => {
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: [MailingLoader] })
+    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
     await jobs.prepare()
 
@@ -84,7 +84,7 @@ describe('background-jobs-mailing', (): void => {
   })
 
   it('renders the matching named templates', async (): Promise<void> => {
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: [MailingLoader] })
+    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
     await jobs.prepare()
 
@@ -101,7 +101,7 @@ describe('background-jobs-mailing', (): void => {
 
   it('throws if a job has an error at loading', async (): Promise<void> => {
     let error: Error
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/load-error', loaders: [MailingLoader] })
+    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/load-error', loaders: { mailing: MailingLoader } })
 
     try {
       await jobs.prepare()
