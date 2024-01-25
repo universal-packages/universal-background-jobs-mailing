@@ -16,7 +16,7 @@
     "update-dependents": "umaintenance update-dependents"
   },
   "dependencies": {
-    "@universal-packages/mailing": "^1.2.2",
+    "@universal-packages/mailing": "^1.2.3",
     "change-case": "^4.1.2"
   },
   "peerDependencies": {
