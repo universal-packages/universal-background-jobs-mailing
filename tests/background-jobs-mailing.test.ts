@@ -1,5 +1,5 @@
 import { Jobs } from '@universal-packages/background-jobs'
-import { TestEngine } from '@universal-packages/mailing'
+import { Mailing } from '@universal-packages/mailing'
 
 import { MailingLoader } from '../src'
 import ExcellentEmail from './__fixtures__/emails/Excellent.email'
@@ -8,13 +8,13 @@ import FailingEmail from './__fixtures__/failing/Failing.email'
 
 describe('background-jobs-mailing', (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
-    const enqueuedMock = jest.fn()
+    const listener = jest.fn()
     const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
     await jobs.prepare()
     await jobs.queue.clear()
 
-    jobs.on('enqueued', enqueuedMock)
+    jobs.on('enqueued', listener)
 
     await GoodEmail.sendLater({ good: true })
     await ExcellentEmail.sendLater({ excellent: true })
@@ -23,7 +23,7 @@ describe('background-jobs-mailing', (): void => {
 
     expect(GoodEmail).toHaveBeenEnqueuedWith({ good: true })
     expect(ExcellentEmail).toHaveBeenEnqueuedWith({ excellent: true })
-    expect(enqueuedMock.mock.calls).toEqual([
+    expect(listener.mock.calls).toEqual([
       [
         {
           event: 'enqueued',
@@ -80,7 +80,7 @@ describe('background-jobs-mailing', (): void => {
 
     await new GoodEmail().perform({ good: true })
 
-    expect(TestEngine.mock).toHaveBeenCalledWith({ locals: { good: true }, subject: 'good', html: 'html' })
+    expect(Mailing).toHaveSentOneWithOptions({ locals: { good: true }, subject: 'good', html: 'html' })
   })
 
   it('renders the matching named templates', async (): Promise<void> => {
@@ -90,7 +90,7 @@ describe('background-jobs-mailing', (): void => {
 
     await new ExcellentEmail().perform({ local: 'for sure' })
 
-    expect(TestEngine.mock).toHaveBeenCalledWith({
+    expect(Mailing).toHaveSentOneWithOptions({
       subject: 'excellent',
       locals: { local: 'for sure' },
       template: expect.stringMatching(/.*emails\/excellent-email/),
