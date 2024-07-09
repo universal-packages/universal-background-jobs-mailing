@@ -1,4 +1,4 @@
-import { Jobs } from '@universal-packages/background-jobs'
+import { BackgroundJobs } from '@universal-packages/background-jobs'
 import { Mailing } from '@universal-packages/mailing'
 
 import { MailingLoader } from '../src'
@@ -9,17 +9,17 @@ import FailingEmail from './__fixtures__/failing/Failing.email'
 describe('background-jobs-mailing', (): void => {
   it('loads emails to be performed by the jobs system', async (): Promise<void> => {
     const listener = jest.fn()
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
+    const backgroundJobs = new BackgroundJobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
-    await jobs.prepare()
-    await jobs.queue.clear()
+    await backgroundJobs.prepare()
+    await backgroundJobs.queue.clear()
 
-    jobs.on('enqueued', listener)
+    backgroundJobs.on('enqueued', listener)
 
     await GoodEmail.sendLater({ good: true })
     await ExcellentEmail.sendLater({ excellent: true })
 
-    await jobs.release()
+    await backgroundJobs.release()
 
     expect(GoodEmail).toHaveBeenEnqueuedWith({ good: true })
     expect(ExcellentEmail).toHaveBeenEnqueuedWith({ excellent: true })
@@ -59,9 +59,9 @@ describe('background-jobs-mailing', (): void => {
 
   it('throws when the build method is not implemented', async (): Promise<void> => {
     let error: Error
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/failing', loaders: { mailing: MailingLoader } })
+    const backgroundJobs = new BackgroundJobs({ jobsLocation: './tests/__fixtures__/failing', loaders: { mailing: MailingLoader } })
 
-    await jobs.prepare()
+    await backgroundJobs.prepare()
 
     try {
       await new FailingEmail().send({ good: true })
@@ -74,9 +74,9 @@ describe('background-jobs-mailing', (): void => {
   })
 
   it('perform behaves as if using send', async (): Promise<void> => {
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
+    const backgroundJobs = new BackgroundJobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
-    await jobs.prepare()
+    await backgroundJobs.prepare()
 
     await new GoodEmail().perform({ good: true })
 
@@ -84,9 +84,9 @@ describe('background-jobs-mailing', (): void => {
   })
 
   it('renders the matching named templates', async (): Promise<void> => {
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
+    const backgroundJobs = new BackgroundJobs({ jobsLocation: './tests/__fixtures__/emails', loaders: { mailing: MailingLoader } })
 
-    await jobs.prepare()
+    await backgroundJobs.prepare()
 
     await new ExcellentEmail().perform({ local: 'for sure' })
 
@@ -101,10 +101,10 @@ describe('background-jobs-mailing', (): void => {
 
   it('throws if a job has an error at loading', async (): Promise<void> => {
     let error: Error
-    const jobs = new Jobs({ jobsLocation: './tests/__fixtures__/load-error', loaders: { mailing: MailingLoader } })
+    const backgroundJobs = new BackgroundJobs({ jobsLocation: './tests/__fixtures__/load-error', loaders: { mailing: MailingLoader } })
 
     try {
-      await jobs.prepare()
+      await backgroundJobs.prepare()
     } catch (err) {
       error = err
     }
