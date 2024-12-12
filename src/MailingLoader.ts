@@ -12,7 +12,7 @@ export default class MailingLoader extends BaseLoader {
   public constructor(options: LoaderOptions) {
     super(options)
 
-    this.mailingInstance = new Mailing(options.passedOptions.mailing)
+    this.mailingInstance = new Mailing(options.passedOptions)
   }
 
   public async prepare(): Promise<void> {
